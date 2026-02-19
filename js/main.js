@@ -39,9 +39,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const trendingCards = document.querySelectorAll('.video-card');
     const modalVideoContainer = document.getElementById('modalVideoContainer');
 
-    function openModal(type, src) {
+    const modalVideoTitle = document.getElementById('modalVideoTitle');
+
+    function openModal(type, src, title) {
         videoModal.classList.add('active');
         modalVideoContainer.innerHTML = ''; // Clear previous content
+        
+        // Update Title
+        if (modalVideoTitle) {
+            modalVideoTitle.textContent = title || "Project Title";
+        }
 
         if (type === 'video' || !type) {
             // Direct Video File (MP4, etc.) - Prioritized
@@ -49,15 +56,15 @@ document.addEventListener('DOMContentLoaded', () => {
             video.src = src;
             video.controls = true;
             video.autoplay = true;
-            video.width = "100%";
-            video.height = "100%";
+            video.playsInline = true; // Important for mobile
+            // Remove width/height attributes to let CSS handle it
             video.classList.add('direct-video');
             modalVideoContainer.appendChild(video);
             modalVideoContainer.classList.remove('vertical-mode');
         } else if (type === 'youtube') {
             // YouTube Embed
             const iframe = document.createElement('iframe');
-            const origin = window.location.origin === 'null' ? '*' : window.location.origin;
+            const origin = window.location.origin === 'file://' ? '*' : window.location.origin;
             iframe.src = `https://www.youtube.com/embed/${src}?autoplay=1&rel=0&enablejsapi=1&origin=${encodeURIComponent(origin)}`;
             iframe.width = "100%";
             iframe.height = "100%";
@@ -88,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const type = btn.dataset.videoType;
             const src = btn.dataset.videoSrc;
-            openModal(type, src);
+            openModal(type, src, "Featured Video"); // Default title for floating buttons
         });
     });
 
@@ -97,8 +104,11 @@ document.addEventListener('DOMContentLoaded', () => {
         card.addEventListener('click', () => {
              const type = card.dataset.videoType || 'youtube';
              const src = card.dataset.videoSrc;
+             const titleElement = card.querySelector('h3');
+             const title = titleElement ? titleElement.textContent : "Cinematic Edit";
+             
              if (src) {
-                 openModal(type, src);
+                 openModal(type, src, title);
              }
         });
     });

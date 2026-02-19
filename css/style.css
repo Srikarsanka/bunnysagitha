@@ -974,10 +974,13 @@ a {
       position: relative;
 }
 
-.modal-video-container iframe {
+.modal-video-container iframe,
+.modal-video-container video {
       width: 100%;
       height: 100%;
       border: none;
+      object-fit: contain;
+      /* Ensure video fits within container without cropping */
 }
 
 /* Vertical Mode (Instagram) */
@@ -1343,7 +1346,7 @@ a {
 /* ISCL Video Grid */
 .iscl-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 30px;
 }
 
@@ -1440,10 +1443,45 @@ a {
 
       .iscl-stats {
             grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
       }
 
       .stat-number {
             font-size: 2rem;
+      }
+
+      .stat-item {
+            padding: 15px;
+      }
+}
+
+@media (max-width: 480px) {
+      .iscl-stats {
+            grid-template-columns: 1fr;
+      }
+
+      .iscl-title {
+            font-size: 2.2rem;
+            word-wrap: break-word;
+            /* Prevent overflow */
+      }
+
+      .iscl-subtitle {
+            font-size: 1rem;
+            margin-bottom: 30px;
+      }
+
+      .iscl-grid {
+            grid-template-columns: 1fr;
+            /* Force single column */
+      }
+
+      .iscl-header {
+            margin-bottom: 40px;
+      }
+
+      .iscl-info p {
+            font-size: 1rem;
       }
 }
 
@@ -1581,6 +1619,14 @@ a {
 }
 
 @media (max-width: 768px) {
+      .main-header {
+            padding: 15px 20px;
+      }
+
+      .logo {
+            font-size: 1.5rem;
+      }
+
       .menu-icon {
             display: block;
             font-size: 1.5rem;
@@ -1669,12 +1715,28 @@ a {
       }
 
       .hero-visual {
-            height: 400px;
-            margin-top: -50px;
+            height: 350px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: visible;
+            /* Allow orbit to show */
       }
 
       .orbit-system {
-            transform: scale(0.7);
+            transform: scale(0.55);
+            width: 300px;
+            height: 300px;
+      }
+
+      .hero-title {
+            font-size: clamp(2.5rem, 8vw, 3.5rem);
+      }
+
+      .hero-subtitle {
+            font-size: 1rem;
+            padding: 0 10px;
       }
 
       .feature-content-wrapper {
@@ -1682,7 +1744,7 @@ a {
       }
 
       .massive-text-video {
-            font-size: 15vw;
+            font-size: clamp(3rem, 12vw, 6rem);
             /* Adjust for smaller screens */
       }
 
@@ -1711,6 +1773,21 @@ a {
       .contact-section .insta-grid {
             grid-template-columns: repeat(3, 1fr);
             /* 3 cols on mobile */
+      }
+
+      .modal-content {
+            width: 95%;
+            aspect-ratio: auto;
+            max-height: 90vh;
+      }
+
+      .modal-video-container {
+            aspect-ratio: 16/9;
+      }
+
+      .modal-video-container.vertical-mode {
+            aspect-ratio: 9/16;
+            max-height: 70vh;
       }
 }
 
@@ -1857,6 +1934,17 @@ a {
 
       .insta-item {
             aspect-ratio: 1/1;
+      }
+
+      .contact-actions {
+            flex-direction: column;
+            width: 100%;
+            max-width: 300px;
+      }
+
+      .big-btn {
+            width: 100%;
+            justify-content: center;
       }
 }
 
