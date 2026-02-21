@@ -64,14 +64,12 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (type === 'youtube') {
             // YouTube Embed
             const iframe = document.createElement('iframe');
-            const origin = window.location.origin === 'file://' ? '*' : window.location.origin;
-            iframe.src = `https://www.youtube.com/embed/${src}?autoplay=1&rel=0&enablejsapi=1&origin=${encodeURIComponent(origin)}`;
+            iframe.src = `https://www.youtube.com/embed/${src}?autoplay=1&rel=0`;
             iframe.width = "100%";
             iframe.height = "100%";
             iframe.frameBorder = "0";
             iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
             iframe.allowFullscreen = true;
-            iframe.referrerPolicy = "strict-origin-when-cross-origin";
             iframe.classList.add('youtube-iframe');
             modalVideoContainer.appendChild(iframe);
             modalVideoContainer.classList.remove('vertical-mode');
